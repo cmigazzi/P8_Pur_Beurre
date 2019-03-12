@@ -1,8 +1,10 @@
 
 import pytest
 
-from eat_better.management.commands.api_to_database.get_data \
-    import (Api, ProductRecorder)
+from eat_better.management.commands.api_to_database.api \
+    import Api
+from eat_better.management.commands.api_to_database.product_recorder \
+    import ProductRecorder
 from eat_better.models import Nutriments, Brand, Product, Hierarchy
 
 from decimal import Decimal
