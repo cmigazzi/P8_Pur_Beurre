@@ -2,6 +2,8 @@
 
 import requests
 
+from eat_better.models import Nutriments, Category, Brand, Product, Hierarchy
+
 
 class Api():
     """Represent the API caller."""
@@ -40,8 +42,9 @@ class Api():
                        "page_size": 1000,
                        "json": 1}
 
-            response = requests.get("https://fr.openfoodfacts.org/cgi/search.pl?",
-                                    params=payload)
+            response = requests.get(
+                            "https://fr.openfoodfacts.org/cgi/search.pl?",
+                            params=payload)
 
             products = response["products"]
 
@@ -67,126 +70,112 @@ class Api():
 
                     clean_product["nutriments"] = clean_nutriments
 
-                    clean_products.append(clean_product)
+                    product_renamed = self.rename_fields(clean_product,
+                                                         category)
+
+                    if product_renamed is False:
+                        break
+
+                    clean_products.append(product_renamed)
 
         return clean_products
 
+    @staticmethod
+    def rename_fields(product, category):
+        product["name"] = product.pop("product_name_fr")
+        product["nutriscore"] = product.pop("nutrition_grade_fr")
+        product["brand"] = product.pop("brands").split(',')[0]
+        categories = product["categories"].split(', ')
+        try:
+            main_category_id = categories.index(category)
+        except ValueError:
+            return False
+        categories = categories[main_category_id:]
+        product["categories"] = [c for c in enumerate(categories)]
+        nutriments = product["nutriments"]
+        nutriments["saturated_fat"] = nutriments.pop("saturated-fat_100g")
+        nutriments["fat"] = nutriments.pop("fat_100g")
+        nutriments["sugars"] = nutriments.pop("sugars_100g")
+        nutriments["salt"] = nutriments.pop("salt_100g")
+        product["nutriments"] = nutriments
 
-# class ProductFromApiToDatabase():
-#     """Represent a product from api call to database saving.
-
-#     Arguments:
-#         product {list} -- dictionnaries of products property
-#         category {str} -- main category of the product
-#         db_connection {<class records.Database>} -- database connection
-
-#     """
-
-#     def __init__(self, product, category, db_connection):
-#         """Please see help(ProductFromApiToDatabase) for more details."""
-#         self.db = db_connection
-#         self.fields = product
-#         self.category = category
-#         self.categories = None
-#         self.stores = None
-#         self.brand = None
-#         self.category_index = None
-#         self.errors = 0
-
-#     def __str__(self):
-#         """Print product dict."""
-#         return f"{self.fields}"
-
-#     @staticmethod
-#     def clean_tag(elmt_with_commas, max_lenght):
-#         """Transform a string of elements separated by commas into a list.
-
-#         Arguments:
-#             elmt_with_commas {string with commas} --
-#                                 elements separated by commas
-
-#         Returns:
-#             [list] -- elements in a list
-
-#         """
-#         elmt_list = elmt_with_commas.split(",")
-#         elmt_list = [e.strip() for e in elmt_list if len(e) < max_lenght]
-#         return elmt_list
-
-#     def validate(self):
-#         """Check if a product is valid."""
-#         # Check KeyError
-#         try:
-#             self.fields["product_name_fr"]
-#             self.fields["generic_name"]
-#             self.fields["url"]
-#             self.fields["nutrition_grade_fr"]
-#             self.fields["categories"]
-#             self.fields["stores"]
-#             self.fields["brands"]
-#         except KeyError:
-#             return False
-
-#         # Check empty field and lenght of generic_name
-#         for key, value in self.fields.items():
-#             if value == '':
-#                 return False
-#                 break
-#             if key == "generic_name":
-#                 if len(value) > 255:
-#                     return False
-
-#         try:
-#             self.categories = ProductFromApiToDatabase.clean_tag(
-#                 self.fields["categories"], 100)
-#             self.stores = ProductFromApiToDatabase.clean_tag(
-#                 self.fields["stores"], 45)
-#             self.brands = ProductFromApiToDatabase.clean_tag(
-#                 self.fields["brands"], 45)
-#             self.category_index = self.categories.index(self.category)
-#         except KeyError:
-#             return False
-#         except ValueError:
-#             return False
-#         except AttributeError:
-#             self.errors += 1
-#             print(self.errors)
-#             return False
-
-#     def clean(self):
-#         """Clean and format product property to be saved."""
-#         # clean categories
-#         filter_categories = \
-#             self.categories[self.category_index: self.category_index+2]
-#         self.categories = [
-#             category for category in filter_categories if category != '']
-#         del self.fields["categories"]
-#         self.fields["category"] = self.categories[0]
-
-#         try:
-#             self.fields["sub_category"] = self.categories[1]
-#         except IndexError:
-#             self.fields["sub_category"] = None
-
-#         # clean stores
-#         filter_stores = self.stores[:2]
-#         self.stores = [store for store in filter_stores]
-#         del self.fields["stores"]
-
-#         for n in range(len(self.stores)):
-#             field_name = "store_" + str(n)
-#             self.fields[field_name] = self.stores[n]
-
-#         # clean brand
-#         self.brand = self.brands[0]
-#         self.fields["brand"] = self.brand
-#         del self.fields["brands"]
-
-#         # clean others fields
-#         self.fields["name"] = self.fields.pop("product_name_fr")
-#         self.fields["description"] = self.fields.pop("generic_name")
-#         self.fields["nutri_score"] = self.fields.pop("nutrition_grade_fr")
+        return product
 
 
-# if __name__ == "__main__":
-#     pass
+class ProductRecorder():
+    """Represent the recorder of products from API to database.
+
+    Methods:
+        save_nutriments -- save nutriments to database
+        save_categories -- save categories to database
+        save_brand -- save brand to database
+        save_product -- save product to database
+        save_hierarchy -- save categories hierarchy
+    """
+
+    def __init__(self, product):
+        """Process product saving.
+
+        Arguments:
+            product {dict} -- product attributes
+        """
+        self.product_input = product
+        self.nutriments = self.save_nutriments()
+        self.brand = self.save_brand()
+        self.categories = self.save_categories()
+        self.product = self.save_product()
+        self.save_hierarchy()
+
+    def save_nutriments(self):
+        """Save nutriments.
+
+        Returns:
+            [Nutriments object] -- Nutriments
+        """
+        data = self.product_input["nutriments"]
+        nutriments = Nutriments.objects.create(**data)
+        return nutriments
+
+    def save_categories(self):
+        """Save categories.
+
+        Returns:
+            [list] -- tuple (level, Category object)
+        """
+        categories = []
+        for level, category in self.product_input["categories"]:
+            c, created = Category.objects.get_or_create(name=category)
+            categories.append((level, c))
+        return categories
+
+    def save_brand(self):
+        """Save brand.
+
+        Returns:
+            [Brand object] -- Brand
+        """
+        brand, created = Brand.objects.get_or_create(
+                                    name=self.product_input["brand"])
+        return brand
+
+    def save_product(self):
+        """Save product.
+
+        Returns:
+            Product object -- Product
+        """
+        product = Product.objects.create(
+                            name=self.product_input["name"],
+                            url=self.product_input["url"],
+                            nutriscore=self.product_input["nutriscore"],
+                            brand=self.brand,
+                            nutriments=self.nutriments
+                                        )
+        return product
+
+    def save_hierarchy(self):
+        """Save categories hierarchy."""
+        for level, category in self.categories:
+            Hierarchy.objects.create(product=self.product,
+                                     category=category,
+                                     level=level)
