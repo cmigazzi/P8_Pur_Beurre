@@ -9,10 +9,10 @@ class Category(models.Model):
 
 
 class Nutriments(models.Model):
-    fat = models.DecimalField(max_digits=3, decimal_places=1)
-    sugars = models.DecimalField(max_digits=3, decimal_places=1)
-    saturated_fat = models.DecimalField(max_digits=3, decimal_places=1)
-    salt = models.DecimalField(max_digits=4, decimal_places=3)
+    fat = models.DecimalField(max_digits=4, decimal_places=1)
+    sugars = models.DecimalField(max_digits=4, decimal_places=1)
+    saturated_fat = models.DecimalField(max_digits=4, decimal_places=1)
+    salt = models.DecimalField(max_digits=6, decimal_places=3)
 
 
 class Brand(models.Model):

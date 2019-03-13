@@ -44,9 +44,16 @@ class Api():
                             "https://fr.openfoodfacts.org/cgi/search.pl?",
                             params=payload)
 
-            products = response["products"]
+            json_response = response.json()
 
+            products = json_response["products"]
+
+            key_error = 0
+            renamed_error = 0
+            n = 0
+            n_else = 0
             for product in products:
+                n += 1
                 try:
                     for field in self.FIELD_NEEDED:
                         if product[field] in ('', None):
@@ -56,26 +63,26 @@ class Api():
                                 if product[field][nutriment] in ('', None):
                                     raise KeyError
                 except KeyError:
-                    print("Bad product")
+                    key_error += 1
                 else:
+                    n_else += 1
                     clean_product = {
                         k: v for k, v in product.items()
-                        if k in self.FIELD_NEEDED and v != ''}
+                        if k in self.FIELD_NEEDED}
 
                     clean_nutriments = {
                         k: v for k, v in product["nutriments"].items()
-                        if k in self.NUTRIMENTS and v != ''}
+                        if k in self.NUTRIMENTS}
 
                     clean_product["nutriments"] = clean_nutriments
 
                     product_renamed = self.rename_fields(clean_product,
                                                          category)
-
                     if product_renamed is False:
-                        break
+                        renamed_error += 1
+                        continue
 
                     clean_products.append(product_renamed)
-
         return clean_products
 
     @staticmethod
@@ -98,5 +105,3 @@ class Api():
         product["nutriments"] = nutriments
 
         return product
-
-

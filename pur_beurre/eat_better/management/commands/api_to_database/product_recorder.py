@@ -34,7 +34,10 @@ class ProductRecorder():
             [Nutriments object] -- Nutriments
         """
         data = self.product_input["nutriments"]
-        nutriments = Nutriments.objects.create(**data)
+        try:
+            nutriments = Nutriments.objects.create(**data)
+        except:
+            print(data)
         return nutriments
 
     def save_categories(self):
