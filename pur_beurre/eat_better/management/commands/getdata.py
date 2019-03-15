@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         """Handle getdata command."""
         n = 1
+        self.stdout.write("Loading data from OpenFoodFacts...")
         products = Api().call()
         self.stdout.write("Populating database...")
         for product in products:

@@ -1,0 +1,31 @@
+/* Autocomplete style */
+ul {
+    list-style-type: none;
+}
+
+.ui-menu .ui-menu-item {
+    cursor: pointer;
+}
+
+.ui-menu-item {
+    padding: 5px;
+}
+
+
+.ui-autocomplete {
+    position: absolute;
+    background: white;
+    padding: 0;
+    border-radius: 2px;
+    border: white solid 1px;
+}
+
+.ui-menu-item:hover {
+    background: #f4623a;
+    color: white;
+}
+
+/* Form control */
+.form-inline {
+    width: none;
+}

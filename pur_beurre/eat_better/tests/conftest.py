@@ -2,11 +2,15 @@
 import pytest
 import requests
 
+from django.urls import reverse
+
+from eat_better.models import Product
+
 
 @pytest.fixture()
 def index_url_get(client):
     """Create fixture for root url."""
-    response = client.get('/')
+    response = client.get(reverse("index"))
     return response
 
 
@@ -180,3 +184,14 @@ def off_api_bad_products(monkeypatch):
                 }
     monkeypatch.setattr(requests, "get", mock_request)
     monkeypatch.setattr(requests.Response, "json", mock_json)
+
+
+@pytest.fixture()
+def product_query(monkeypatch):
+    def mock_query(*args, **kwargs):
+        return ["Nana",
+                "Nano",
+                "Ninon",
+                "Nitrate",
+                "Nutriment"]
+    monkeypatch.setattr(Product.objects, "filter", mock_query)
