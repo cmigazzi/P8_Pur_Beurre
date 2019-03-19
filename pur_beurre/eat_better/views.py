@@ -27,11 +27,31 @@ def legals(request):
 
 def search(request):
     """Returns view for search url."""
-    product = request.GET.get("product")
-    searched_product = Product.objects.filter(
-                name=request.GET.get("product"))[0]
-    results = Product.objects.filter(
-        nutriscore__lt=searched_product.nutriscore)
-    context = {"product": product,
+    try:
+        searched_product = Product.objects.filter(
+                    name=request.GET.get("product"))[0]
+        results = []
+        for hierarchy in searched_product.hierarchy_set.all():
+            pre_results = Product.objects.filter(
+                            nutriscore__lt=searched_product.nutriscore,
+                            categories__name=hierarchy.category)
+
+            if len(results) == 0 and len(pre_results) != 0:
+                results = pre_results
+                if len(results) > 80:
+                    break
+
+            elif len(results) + len(pre_results) > 80:
+                results.union(pre_results)
+                break
+
+            elif len(results) != 0:
+                results.union(pre_results)
+
+    except IndexError:
+        searched_product = request.GET.get("product")
+        results = []
+
+    context = {"product": searched_product,
                "results": results}
     return render(request, "results.html", context)

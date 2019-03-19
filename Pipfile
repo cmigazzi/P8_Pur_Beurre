@@ -7,10 +7,12 @@ verify_ssl = true
 pytest = "*"
 pytest-django = "*"
 flake8 = "*"
+pytest-cov = "*"
 
 [packages]
 django = "*"
 psycopg2 = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

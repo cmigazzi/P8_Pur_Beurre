@@ -41,3 +41,6 @@ class Hierarchy(models.Model):
 
     def __str__(self):
         return f"{self.product}, {self.category}, {self.level}"
+
+    class Meta:
+        ordering = ("-level",)
