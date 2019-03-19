@@ -3,8 +3,13 @@ import pytest
 import requests
 
 from django.urls import reverse
+from django.core.management import call_command
 
-from eat_better.models import Product
+
+@pytest.fixture(scope='session')
+def django_db_populated(django_db_setup, django_db_blocker):
+    with django_db_blocker.unblock():
+        call_command('loaddata', 'fixtures/db.json')
 
 
 @pytest.fixture()
@@ -184,14 +189,3 @@ def off_api_bad_products(monkeypatch):
                 }
     monkeypatch.setattr(requests, "get", mock_request)
     monkeypatch.setattr(requests.Response, "json", mock_json)
-
-
-@pytest.fixture()
-def product_query(monkeypatch):
-    def mock_query(*args, **kwargs):
-        return ["Nana",
-                "Nano",
-                "Ninon",
-                "Nitrate",
-                "Nutriment"]
-    monkeypatch.setattr(Product.objects, "filter", mock_query)

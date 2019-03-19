@@ -40,4 +40,4 @@ class Hierarchy(models.Model):
     level = models.IntegerField()
 
     def __str__(self):
-        return self.level
+        return f"{self.product}, {self.category}, {self.level}"

@@ -8,6 +8,7 @@ from .models import Product
 
 
 def index(request):
+    """Returns view for index url."""
     if request.method == "POST":
         term = json.loads(request.body.decode("utf-8"))["term"].lower()
         products = Product.objects.filter(name__istartswith=term).distinct()[:5]
@@ -20,10 +21,17 @@ def index(request):
 
 
 def legals(request):
+    """Returns view for legals url."""
     return render(request, "mentions-legales.html")
 
 
 def search(request):
+    """Returns view for search url."""
     product = request.GET.get("product")
-    context = {"product": product}
+    searched_product = Product.objects.filter(
+                name=request.GET.get("product"))[0]
+    results = Product.objects.filter(
+        nutriscore__lt=searched_product.nutriscore)
+    context = {"product": product,
+               "results": results}
     return render(request, "results.html", context)
