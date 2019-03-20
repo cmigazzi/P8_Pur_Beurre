@@ -12,7 +12,7 @@ def index(request):
     if request.method == "POST":
         term = json.loads(request.body.decode("utf-8"))["term"].lower()
         products = Product.objects.filter(name__istartswith=term).distinct()[:5]
-        data = [{"name": p.name, "brand": p.brand.name} for p in products]
+        data = [{"name": p.name} for p in products]
         return JsonResponse(data, safe=False)
 
     form = SearchForm()

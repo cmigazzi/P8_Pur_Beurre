@@ -24,6 +24,16 @@ class TestSearch:
         assert "results.html" in templates
 
     @pytest.mark.django_db
+    def test_products_name_in_templates(self, client, django_db_populated):
+        context = {"product": "Quatre-Quarts Pur Beurre"}
+        response = client.get(reverse("search"), context)
+        results = response.context["results"]
+        content = response.content
+        for product in results:
+            byte_mark = bytes(f"<div>{product.name}</div>", 'utf-8')
+            assert byte_mark in content
+
+    @pytest.mark.django_db
     def test_product_to_search(self, client, django_db_populated):
         context = {"product": "Quatre-Quarts Pur Beurre"}
         response = client.get(reverse("search"), context)
@@ -55,3 +65,6 @@ class TestSearch:
             assert product.nutriscore < searched_product.nutriscore
             assert len([c for c in product.categories.all()
                         if c in categories]) != 0
+
+
+        

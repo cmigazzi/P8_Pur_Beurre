@@ -29,7 +29,7 @@ $("#search-field").autocomplete({
             success: function(data){
                 response($.map(data,                 
                     function(product){
-                    return product.name + " " + product.brand 
+                    return product.name 
                     }
                   )
                 );
