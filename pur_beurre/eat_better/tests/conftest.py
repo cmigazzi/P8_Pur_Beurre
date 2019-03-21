@@ -37,6 +37,8 @@ def good_product():
                           "Biscuits au chocolat au lait",
             'url': "https://fr.openfoodfacts.org/produit/"
                    "3017760826174/granola-chocolat-au-lait-lu",
+            'image_small_url': "https://static.openfoodfacts.org/images/"
+                               "products/301/776/082/6174/front_fr.5.200.jpg",
             'nutriments': {
                             'saturated-fat_100g': '13',
                             'fat_100g': '24',
@@ -56,6 +58,8 @@ def clean_product():
                            (3, "Biscuits au chocolat au lait")],
             'url': "https://fr.openfoodfacts.org/produit/"
                    "3017760826174/granola-chocolat-au-lait-lu",
+            'image': "https://static.openfoodfacts.org/images/products"
+                     "/301/776/082/6174/front_fr.5.200.jpg",
             'nutriments': {
                           'saturated_fat': '13',
                           'fat': '24',
@@ -74,6 +78,8 @@ def product_without_category():
                           "Biscuits au chocolat au lait",
             'url': "https://fr.openfoodfacts.org/produit/"
                    "3017760826174/granola-chocolat-au-lait-lu",
+            'image_small_url': "https://static.openfoodfacts.org/images/"
+                               "products/301/776/082/6174/front_fr.5.200.jpg",
             'nutriments': {
                             'saturated-fat_100g': '13',
                             'fat_100g': '24',
@@ -101,6 +107,9 @@ def off_api_request(monkeypatch):
                                   "Biscuits au chocolat au lait",
                     'url': "https://fr.openfoodfacts.org/produit/"
                            "3017760826174/granola-chocolat-au-lait-lu",
+                    'image_small_url': "https://static.openfoodfacts.org/"
+                                       "images/products/301/776/082/6174/"
+                                       "front_fr.5.200.jpg",
                     'nutriments': {
                         'saturated-fat_100g': '13',
                         'fat_100g': '24',

@@ -10,25 +10,16 @@
       </div>
     </div>
 </header>
-<section class="page-section bg-primary" id="about">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          {% for p in results%}
-            <div class="product">
-                {{ p.name }}
-                {{ p.nutriscore|upper }}
-            </div>
-          {% endfor %}
+<section class="page-section bg-primary">
+    <div class="container results-list">
+      {% for p in results %}
+        <div class="product col-4 text-center">
+            <img class="align-items-center" src="{{ p.image }}" alt="">
+            <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
+            <div class="product-name">{{ p.name }}</div>        
         </div>
-      </div>
+        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+      {% endfor %}
     </div>
   </section>
-
-
-
-
-
-
-
 {% endblock %}

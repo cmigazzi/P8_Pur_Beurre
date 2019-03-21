@@ -31,7 +31,7 @@ def test_bad_products(off_api_bad_products):
 
 
 def test_rename_fields(good_product, product_without_category):
-    """Test renam_field static method."""
+    """Test rename_field static method."""
     p = Api().rename_fields(good_product, "Biscuits et gâteaux")
     result = {'nutriscore': 'e',
               'brand': 'LU',
@@ -42,6 +42,8 @@ def test_rename_fields(good_product, product_without_category):
                              (3, "Biscuits au chocolat au lait")],
               'url': "https://fr.openfoodfacts.org/produit/"
                      "3017760826174/granola-chocolat-au-lait-lu",
+              'image': "https://static.openfoodfacts.org/images/products/"
+                       "301/776/082/6174/front_fr.5.200.jpg",
               'nutriments': {
                             'saturated_fat': '13',
                             'fat': '24',
@@ -80,6 +82,7 @@ def test_product_recorder(clean_product):
     assert p.product == product
     assert p.product.name == clean_product["name"]
     assert p.product.brand.name == clean_product["brand"]
+    assert p.product.image == clean_product["image"]
 
     fat = clean_product["nutriments"]["fat"]
     assert p.product.nutriments.fat == fat

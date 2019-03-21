@@ -26,10 +26,11 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     nutriscore = models.CharField(max_length=1)
     url = models.CharField(max_length=255)
+    image = models.CharField(max_length=255)
     categories = models.ManyToManyField(Category, through="Hierarchy")
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     nutriments = models.ForeignKey(Nutriments, on_delete=models.CASCADE)
-
+    
     def __str__(self):
         return self.name
 

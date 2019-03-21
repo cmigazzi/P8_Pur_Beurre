@@ -1,6 +1,131 @@
+/* General */
+hr.divider {
+    border-color: #345a61;
+}
+
+/* Bootstrap override */
+.btn-primary {
+    background: #c45525;
+    border-color: #c45525;
+}
+
+.btn-primary:hover {
+    background: #de9440;
+    border-color: #de9440;
+}
+
+.form-control:focus {
+    border-color:  #de9440;
+}
+
+.rounded-circle {
+    background-color: #86ebe6;
+    color: #345a61;
+    font-weight: bold;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.nutriscore {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+/* Masthead */
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 72px);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(52, 90, 97, 0.7
+    )), to(rgba(52, 90, 97, 0.7
+    ))), url("../img/biscuits-milk.jpg");
+    background: linear-gradient(to bottom, rgba(52, 90, 97, 0.7
+    ) 0%, rgba(52, 90, 97, 0.7
+    ) 100%), url("../img/biscuits-milk.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+  
+  header.masthead h1 {
+    font-size: 2.25rem;
+  }
+  
+  @media (min-width: 992px) {
+    header.masthead {
+      height: 100vh;
+      min-height: 40rem;
+      padding-top: 72px;
+      padding-bottom: 0;
+    }
+    header.masthead p {
+      font-size: 1.15rem;
+    }
+    header.masthead h1 {
+      font-size: 3rem;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    header.masthead h1 {
+      font-size: 3.5rem;
+    }
+  }
+  
+
 /* Nav */
+#mainNav.navbar-scrolled{
+    background-color: #345a61;
+}
+
 #mainNav {
-    background: grey;
+    background-color: #345a61;
+}
+
+@media (min-width: 992px) {
+    #mainNav {
+        background-color: transparent;
+    }
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+    color: #e8a75d;
+    font-size: 1rem;
+}
+
+#mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
+    color: #e8a75d;
+    font-size: 1rem;
+}
+
+
+.navbar-brand img {
+  width: 40px;
+  height: auto;
+  padding: 0;
+}
+
+/* About */
+.bg-primary {
+    background-color: white !important; 
+}
+
+.img-fluid {
+    margin: 0 auto;
+}
+
+.description {
+    padding: 10px;
+}
+
+.names {
+    margin: 10px;
+}
+
+/* Contact */
+#contact {
+    background-color: #e8a75d;
+    color: #345a61;
 }
 
 /* Results page */
@@ -9,6 +134,13 @@ header.results {
     padding-bottom: 2rem;
     background: white;
   }
+
+/* Products */
+.results-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 
 /* Autocomplete style */
 ul {
@@ -35,9 +167,4 @@ ul {
 .ui-menu-item:hover {
     background: #f4623a;
     color: white;
-}
-
-/* Form control */
-.form-inline {
-    width: none;
 }

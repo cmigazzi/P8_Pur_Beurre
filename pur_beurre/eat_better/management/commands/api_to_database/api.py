@@ -17,7 +17,8 @@ class Api():
                              "brands",
                              "nutriments",
                              "url",
-                             "nutrition_grade_fr"]
+                             "nutrition_grade_fr",
+                             "image_small_url"]
         self.NUTRIMENTS = ["saturated-fat_100g",
                            "fat_100g",
                            "sugars_100g",
@@ -90,6 +91,7 @@ class Api():
         product["name"] = product.pop("product_name_fr")
         product["nutriscore"] = product.pop("nutrition_grade_fr")
         product["brand"] = product.pop("brands").split(',')[0]
+        product["image"] = product.pop("image_small_url")
         categories = product["categories"].split(', ')
         try:
             main_category_id = categories.index(category)

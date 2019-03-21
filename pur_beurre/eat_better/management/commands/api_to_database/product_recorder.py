@@ -71,9 +71,10 @@ class ProductRecorder():
         product = Product.objects.create(
                             name=self.product_input["name"],
                             url=self.product_input["url"],
+                            image=self.product_input["image"],
                             nutriscore=self.product_input["nutriscore"],
                             brand=self.brand,
-                            nutriments=self.nutriments
+                            nutriments=self.nutriments                            
                                         )
         return product
 

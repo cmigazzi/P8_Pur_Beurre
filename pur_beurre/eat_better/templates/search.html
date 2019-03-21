@@ -7,7 +7,7 @@
           <h2 class="text-white">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</h2>
         </div>
         
-          <form class="form-inline col-8" action="{% url 'search' %}">
+          <form class="form-inline col-8 border-0" action="{% url 'search' %}">
               {% csrf_token %}
               {{ search_form.product }}
               <input type="submit" class="btn btn-primary col-auto" value="Chercher">
