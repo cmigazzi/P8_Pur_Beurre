@@ -11,10 +11,12 @@
     </div>
 </header>
 <section class="page-section bg-primary">
-    <div class="container results-list">
+    <div class="container results-list d-flex justify-content-around">
       {% for p in results %}
-        <div class="product col-4 text-center">
-            <img class="align-items-center" src="{{ p.image }}" alt="">
+        <div class="product col-4 text-center rounded">
+            <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
+                <img class="rounded align-middle mx-auto" src="{{ p.image }}" alt="">
+            </div>
             <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
             <div class="product-name">{{ p.name }}</div>        
         </div>

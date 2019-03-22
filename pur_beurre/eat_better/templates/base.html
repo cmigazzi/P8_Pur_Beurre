@@ -31,8 +31,9 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <a class="navbar-brand js-scroll-trigger" href="/">
         <img src="{% static 'img/logo_pur_beurre.png' %}" alt="Pur beurre">
+        <span>Pur Beurre</span>
       </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -40,16 +41,16 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">Chercher</a>
+            <a class="nav-link js-scroll-trigger" href="">Chercher</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Mon compte</a>
+            <a class="nav-link js-scroll-trigger" href=""><i class="fas fa-user fa-2x"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">Mes aliments</a>
+            <a class="nav-link js-scroll-trigger" href="">{% include 'carotte.svg' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Déconnexion</a>
+            <a class="nav-link js-scroll-trigger" href=""><i class="fas fa-sign-out-alt fa-2x"></i></a>
           </li>
         </ul>
       </div>
