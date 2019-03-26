@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'eat_better',
-    
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +105,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'core.User'
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -126,3 +131,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CSRF_USE_SESSIONS = True
+
+

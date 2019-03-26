@@ -15,7 +15,7 @@
       {% for p in results %}
         <div class="product col-4 text-center rounded">
             <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
-                <img class="rounded align-middle mx-auto" src="{{ p.image }}" alt="">
+                <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
             </div>
             <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
             <div class="product-name">{{ p.name }}</div>        

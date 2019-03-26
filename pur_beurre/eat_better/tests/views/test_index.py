@@ -28,7 +28,7 @@ class TestIndex():
         with django_db_blocker.unblock():
             data = json.dumps({"term": "N"})
             response = client.post(reverse("index"),
-                                data,
-                                content_type="application/json")
+                                   data,
+                                   content_type="application/json")
             assert response.status_code == 200
             assert isinstance(response, JsonResponse)

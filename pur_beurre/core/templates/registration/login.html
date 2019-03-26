@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<header class="results">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center justify-content-center text-center">
+        <div class="col-lg-10 align-self-end">
+          <h2>Connectez-vous:</h2>
+        </div>
+      </div>
+    </div> 
+</header>
+<section>
+  <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">Connexion</button>
+  </form>
+  <div>
+      <p>Vou n'avez pas de compte ?</p>
+      <form action="/accounts/signup">
+        <button type="submit">Créer un compte</button>
+      </form>
+  </div>
+</section>
+{% endblock %}

@@ -43,6 +43,12 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="">Chercher</a>
           </li>
+          {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/accounts/login"><i class="fas fa-user fa-2x"></i></a>
+          </li>
+          {% endif %}
+          {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href=""><i class="fas fa-user fa-2x"></i></a>
           </li>
@@ -50,8 +56,9 @@
             <a class="nav-link js-scroll-trigger" href="">{% include 'carotte.svg' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href=""><i class="fas fa-sign-out-alt fa-2x"></i></a>
+            <a class="nav-link js-scroll-trigger" href="/accounts/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>
