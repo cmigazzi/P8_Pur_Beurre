@@ -32,3 +32,8 @@ class TestIndex():
                                    content_type="application/json")
             assert response.status_code == 200
             assert isinstance(response, JsonResponse)
+
+    
+    @pytest.mark.django_db
+    def test_auth_form(self, client, index_url_get):
+        assert index_url_get.context["auth_form"]

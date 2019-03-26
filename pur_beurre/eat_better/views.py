@@ -15,8 +15,8 @@ def index(request):
         data = [{"name": p.name} for p in products]
         return JsonResponse(data, safe=False)
 
-    form = SearchForm()
-    context = {"search_form": form}
+    searched_form = SearchForm()
+    context = {"search_form": searched_form}
     return render(request, "index.html", context)
 
 

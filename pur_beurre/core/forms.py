@@ -1,16 +1,39 @@
 from django import forms
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.forms import AuthenticationForm
 
 User = get_user_model()
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.EmailField(
+                max_length=254, label='',
+                widget=forms.TextInput(attrs={
+                    "class": "form-control mb-2",
+                    "placeholder": "Votre adresse e-mail..."}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={
+                    "class": "form-control",
+                    "placeholder": "Mot de passe"}))
 
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', 
-                                widget=forms.PasswordInput)
+    email = forms.EmailField(
+                max_length=254, label='',
+                widget=forms.TextInput(attrs={
+                    "class": "form-control mb-2",
+                    "placeholder": "Votre adresse e-mail..."}))
+    password1 = forms.CharField(label='',
+                                widget=forms.PasswordInput(attrs={
+                                    "class": "form-control mb-2",
+                                    "placeholder": "Mot de passe..."}
+                                ))
+    password2 = forms.CharField(label='',
+                                widget=forms.PasswordInput(attrs={
+                                    "class": "form-control",
+                                    "placeholder": "Confirmer le mot de passe."}
+                                ))
 
     class Meta:
         model = User

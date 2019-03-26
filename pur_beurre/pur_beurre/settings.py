@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.processors.auth_and_signup'
             ],
         },
     },
@@ -131,5 +132,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CSRF_USE_SESSIONS = True
-
-
