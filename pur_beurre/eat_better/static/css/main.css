@@ -155,7 +155,12 @@ header.results {
     padding-bottom: 2rem;
   }
 .product a {
-    color: #345a61;
+    color: white;
+}
+
+.product a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 .product {
@@ -165,15 +170,33 @@ header.results {
     border: #345a61 1px solid;
     padding: 0;
 }
+
+.product:hover {
+    border-color: #c45525;
+}
+
 .product-img {
     height: 200px;
     width: 200px;
     overflow: hidden;
 }
 
+.product:hover img {
+    opacity: 0.5;
+    filter:alpha(opacity=50);
+}
+
 .product-name {
-    background-color: yellow;
+    background-color: #345a61;
     height: auto;
+}
+
+.save {
+    background-color: #e8a75d;
+}
+
+.save a {
+    color: #345a61; 
 }
 
 .results-list {

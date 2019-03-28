@@ -16,15 +16,22 @@
       {% csrf_token %}
       {% for p in results %}
         <div class="product col-4 text-center rounded">
-            <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
-                <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
-            </div>
+            <a href="{% url 'details' p.id %}">
+              <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
+                  <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
+              </div>
+            </a>
             <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
-            <div class="product-name container">
+            {% if not user.is_authenticated %} 
+            <div class="product-name container rounded-bottom">
                 <a href="{% url 'details' p.id %}">{{ p.name|truncatechars:25 }}</a>
             </div>
-            {% if user.is_authenticated %}            
-            <div class="container">
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div class="product-name container">
+                <a href="{% url 'details' p.id %}">{{ p.name|truncatechars:25 }}</a>
+            </div>            
+            <div class="container save rounded-bottom">
               <a href="" class="substitute" data-id="{{ p.id }}"><i class="fa fa-save" aria-hidden="true"></i> Sauvegarder</a>
             </div>
 

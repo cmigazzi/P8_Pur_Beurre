@@ -16,12 +16,14 @@
       {% for substitution in products %}
       {% with substitution.substitute as p %}
         <div class="product col-4 text-center rounded">
+            <a href="{% url 'details' p.id %}">
             <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
                 <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
             </div>
+            </a>
             <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
             <div class="product-name container">
-                <a href="{% url 'details' p.id %}">{{ p.name }}</a>
+                <a href="{% url 'details' p.id %}">{{ p.name|truncatechars:25 }}</a>
             </div>
         </div> <!-- product -->
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
