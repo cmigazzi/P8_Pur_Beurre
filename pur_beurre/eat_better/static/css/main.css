@@ -3,6 +3,10 @@ hr.divider {
     border-color: #345a61;
 }
 
+.page-section {
+    padding: 3rem 0;
+}
+
 /* Bootstrap override */
 .btn-primary {
     background: #c45525;
@@ -169,6 +173,15 @@ header.results {
     position: absolute;
     top: -0.75rem;
     right: -0.75rem;
+}
+
+/* Details page */
+#img-details {
+    margin-bottom: 3rem;
+}
+
+#nutriscore_nutriments {
+    margin-bottom: 3rem;
 }
 
 /* Autocomplete style */

@@ -7,6 +7,7 @@
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
           <h1>{{ product }}</h1>      
+        </div>
       </div>
     </div>
 </header>
@@ -18,7 +19,9 @@
                 <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
             </div>
             <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
-            <div class="product-name">{{ p.name }}</div>        
+            <div class="product-name">
+              <a href="{% url 'details' p.id %}">{{ p.name }}</a>
+            </div>        
         </div>
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}

@@ -2,9 +2,10 @@ import json
 
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 
 from .forms import SearchForm
-from .models import Product
+from .models import Product, Substitution
 
 
 def index(request):
@@ -55,3 +56,24 @@ def search(request):
     context = {"product": searched_product,
                "results": results}
     return render(request, "results.html", context)
+
+
+def details(request, id_product):
+    """Return view for details url."""
+    product = Product.objects.get(id=id_product)
+    context = {"product": product,
+               "nutriments": product.nutriments}
+    return render(request, "details.html", context)
+
+
+@require_http_methods(["POST"])
+def save_substitute(request, substitute, original):
+    if request.is_ajax():
+        user = request.user
+        Substitution.objects.create(user=user.id,
+                                    original=original.id,
+                                    substitute=substitute.id)
+        response = {"message": "Le produit est sauvegardé !"}
+    else:
+        response = {"message": "Impossible d'enregistrer le produit"}
+    JsonResponse(response)

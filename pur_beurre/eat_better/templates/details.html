@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<header class="results">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.brand }}</p>      
+      </div>
+    </div>
+  </div>
+</header>
+<section class="page-section bg-primary">
+  <div class="container">
+    <div id="img-details" class="row align-items-center">
+      <img class="img-fluid" src="{{ product.image }}" alt="{{ product.name }}">
+    </div>
+    <div class="row" id="nutriscore_nutriments">
+      <div class="col-6">
+        {% static 'img/nutriscore' as img_root%}
+        <img src="{{ img_root }}/{{ product.nutriscore }}.png" alt="{{ product.nutriscore }}">
+      </div>
+      <div class="col-6">
+        <h3>Repères nutritionnels pour 100g</h3>
+        <ul>
+          <li>
+            Matières grasses: {{ nutriments.fat }} g
+          </li>
+          <li>
+            Sucres: {{ nutriments.sugars }} g
+          </li>
+          <li>
+            Acides gras saturés: {{ nutriments.saturated_fat }} g
+          </li>
+          <li>
+            Sel: {{ nutriments.salt }} g
+          </li>
+        </ul>     
+      </div>      
+    </div>
+    <div class="text-center">
+      <form action="{{ product.url }}" target="_blank">
+        <input type="submit" class="btn btn-primary" value="Voir la fiche d'OpenFoodFacts">
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

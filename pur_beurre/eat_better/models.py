@@ -1,4 +1,5 @@
 from django.db import models
+from core.models import User
 
 
 class Category(models.Model):
@@ -30,7 +31,7 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, through="Hierarchy")
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     nutriments = models.ForeignKey(Nutriments, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.name
 
@@ -45,3 +46,14 @@ class Hierarchy(models.Model):
 
     class Meta:
         ordering = ("-level",)
+
+
+class Substitution(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    original = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                 related_name="original")
+    substitute = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                   related_name="substitute")
+
+    def __str__(self):
+        return f"oridignal: {self.original}, substitue:{self.substitute}"

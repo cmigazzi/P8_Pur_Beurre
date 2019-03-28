@@ -80,6 +80,11 @@
                 <div class="form-group">
                     {{ auth_form }}
                 </div>
+                {% if auth_form.errors %}
+                  <script>
+                    $("#loginModal").modal("show");
+                  </script>                  
+                {% endif %}
                 <input type="submit" class="btn btn-primary" value="Connexion"></button>
               </form>
           </div>
@@ -108,6 +113,11 @@
                 <div class="form-group">
                     {{ user_creation_form }}
                 </div>
+                {% if user_creation_form.errors %}
+                <script>
+                  $("#signupModal").modal("show");
+                </script>                  
+                {% endif %}
                 <input type="submit" class="btn btn-primary" value="Créer mon compte"></button>
               </form>
           </div>
