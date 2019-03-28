@@ -7,7 +7,7 @@ hr.divider {
 }
 
 .page-section {
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 
 /* Bootstrap override */
@@ -245,4 +245,18 @@ ul {
 .ui-menu-item:hover {
     background: #f4623a;
     color: white;
+}
+
+/* Legals */
+.legals {
+    max-width: 60%;
+}
+
+.legals ul {
+    list-style-type: disc;
+    margin-bottom: 3rem;
+}
+
+.legals h2 {
+    margin-bottom: 2rem;
 }
