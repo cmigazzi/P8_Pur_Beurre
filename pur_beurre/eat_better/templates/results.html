@@ -6,23 +6,48 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
-          <h1>{{ product }}</h1>      
+          <h1 id="original" data-id="{{ product.id }}">{{ product }}</h1>      
         </div>
       </div>
     </div>
 </header>
 <section class="page-section bg-primary">
     <div class="container results-list d-flex justify-content-around">
+      {% csrf_token %}
       {% for p in results %}
         <div class="product col-4 text-center rounded">
             <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
                 <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
             </div>
             <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
-            <div class="product-name">
-              <a href="{% url 'details' p.id %}">{{ p.name }}</a>
-            </div>        
-        </div>
+            <div class="product-name container">
+                <a href="{% url 'details' p.id %}">{{ p.name|truncatechars:25 }}</a>
+            </div>
+            {% if user.is_authenticated %}            
+            <div class="container">
+              <a href="" class="substitute" data-id="{{ p.id }}"><i class="fa fa-save" aria-hidden="true"></i> Sauvegarder</a>
+            </div>
+
+            <!-- Modal box for succes Ajax save -->
+            <div id="ajaxModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title"></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+        </div> <!-- product -->
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}
     </div>

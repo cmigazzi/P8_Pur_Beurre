@@ -1,4 +1,7 @@
 /* General */
+body {
+    font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 hr.divider {
     border-color: #345a61;
 }
@@ -144,23 +147,33 @@ header.masthead {
     color: #345a61;
 }
 
-/* Results page */
+/* Results & My poducts page */
 header.results {
     color: #e8a75d;
     background-color: #345a61;
     padding-top: 5rem;
     padding-bottom: 2rem;
   }
+.product a {
+    color: #345a61;
+}
+
 .product {
     max-width: 25%;
     box-sizing: border-box;
     margin: 0px 5px 15px 0px;
     border: #345a61 1px solid;
+    padding: 0;
 }
 .product-img {
     height: 200px;
     width: 200px;
     overflow: hidden;
+}
+
+.product-name {
+    background-color: yellow;
+    height: auto;
 }
 
 .results-list {

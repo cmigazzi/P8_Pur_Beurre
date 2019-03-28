@@ -11,6 +11,7 @@ var liste = [
 
 ];
 
+// Autocomplete
 $("#search-field").autocomplete({
     _resizeMenu: function () {
         var ul = this.menu.element;
@@ -36,4 +37,29 @@ $("#search-field").autocomplete({
             }
         });
     }
+});
+
+// Ajax request for saving substitute
+$(document).ready(function() {
+    originalId = $("#original").attr("data-id")
+    $(".substitute").click(function(e) {
+        e.preventDefault();
+        var link = $(this)
+        substituteId = link.attr("data-id")
+        var data = {"original": originalId, "substitute": substituteId}
+        $.post({
+            beforeSend: function(request) {
+                request.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            url: "/save-substitute/",
+            dataType: "json",
+            data: {"data": JSON.stringify(data)},
+            success: function(data) {
+                console.log(data.message)
+                $(".modal-title").text(data.title);
+                $(".modal-body").text(data.message);
+                $("#ajaxModal").modal("show");
+            }
+        });
+    });
 });

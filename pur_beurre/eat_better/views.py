@@ -3,6 +3,8 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForm
 from .models import Product, Substitution
@@ -67,13 +69,34 @@ def details(request, id_product):
 
 
 @require_http_methods(["POST"])
-def save_substitute(request, substitute, original):
+def save_substitute(request):
     if request.is_ajax():
+        data = json.loads(request.POST["data"])
         user = request.user
-        Substitution.objects.create(user=user.id,
-                                    original=original.id,
-                                    substitute=substitute.id)
-        response = {"message": "Le produit est sauvegardé !"}
+        try:
+            original = Product.objects.get(id=data["original"])
+            substitute = Product.objects.get(id=data["substitute"])
+            Substitution.objects.create(user=user,
+                                        original=original,
+                                        substitute=substitute)
+        except ObjectDoesNotExist:
+            response = {
+              "title": "Erreur",
+              "message": "Impossible de retrouver les produits à sauvegarder."}
+        else:
+            response = {
+                "title": "Succès",
+                "message": "Le produit est sauvegardé !"}
     else:
-        response = {"message": "Impossible d'enregistrer le produit"}
-    JsonResponse(response)
+        response = {
+            "title": "Erreur",
+            "message": "Erreur de requête"}
+    return JsonResponse(response)
+
+
+@login_required
+def my_products(request):
+    user = request.user
+    products = Substitution.objects.filter(user=user)
+    context = {"products": products}
+    return render(request, "my-products.html", context)
