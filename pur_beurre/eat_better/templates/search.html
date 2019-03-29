@@ -5,8 +5,7 @@
         <div class="col-lg-10 align-self-end">
           <h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>
           <h2 class="text-white">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</h2>
-        </div>
-        
+        </div>        
           <form class="form-inline col-8 border-0" action="{% url 'search' %}">
               {% csrf_token %}
               {{ search_form.product }}

@@ -21,6 +21,18 @@ hr.divider {
     border-color: #de9440;
 }
 
+.btn-secondary {
+    background: #e8a75d;
+    border-color: #e8a75d;
+    color: #345a61;
+}
+
+.btn-secondary:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #345a61;
+}
+
 .form-control:focus {
     border-color:  #de9440;
 }
@@ -104,6 +116,18 @@ header.masthead {
 
 #mainNav .navbar-brand {
     color: #e8a75d;
+}
+
+#mainNav.navbar-scrolled .navbar-brand {
+    color: #e8a75d;
+}
+
+#mainNav.navbar-scrolled .navbar-brand:hover {
+    color: #fff;
+}
+
+#mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
+    color: #fff;
 }
 
 

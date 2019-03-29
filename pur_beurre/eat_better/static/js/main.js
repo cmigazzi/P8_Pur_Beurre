@@ -1,18 +1,7 @@
-var searchField = $("#search-field")
-var form = $("form")
 var csrftoken = $("input[name='csrfmiddlewaretoken']").attr("value")
 
-var liste = [
-    "Draggable",
-    "Droppable",
-    "Resizable",
-    "Selectable",
-    "Sortable"
-
-];
-
 // Autocomplete
-$("#search-field").autocomplete({
+$(".search-field").autocomplete({
     _resizeMenu: function () {
         var ul = this.menu.element;
         ul.outerWidth(this.element.outerWidth());

@@ -64,7 +64,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.processors.auth_and_signup'
+                'core.processors.auth_and_signup',
+                'eat_better.processors.nav_search_form'
             ],
         },
     },

@@ -14,8 +14,11 @@ def index(request):
     """Returns view for index url."""
     if request.method == "POST":
         term = json.loads(request.body.decode("utf-8"))["term"].lower()
-        products = Product.objects.filter(name__istartswith=term).distinct()[:5]
-        data = [{"name": p.name} for p in products]
+        products = Product.objects.filter(name__istartswith=term)  \
+                                  .distinct()
+        products_names = [p.name for p in products]
+        delete_duplicates = list(set(products_names))
+        data = [{"name": name} for name in delete_duplicates][:5]
         return JsonResponse(data, safe=False)
 
     searched_form = SearchForm()
@@ -37,7 +40,8 @@ def search(request):
         for hierarchy in searched_product.hierarchy_set.all():
             pre_results = Product.objects.filter(
                             nutriscore__lt=searched_product.nutriscore,
-                            categories__name=hierarchy.category)
+                            categories__name=hierarchy.category) \
+                            .order_by("nutriscore")
 
             if len(results) == 0 and len(pre_results) != 0:
                 results = pre_results
