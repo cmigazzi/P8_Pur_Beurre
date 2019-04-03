@@ -1,7 +1,8 @@
 """Contains views for core app."""
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth import login as auth_login
 
-from django.shortcuts import render, redirect
-from .forms import UserCreationForm
+from .forms import UserCreationForm, LoginForm
 
 
 def signup(request):
@@ -9,9 +10,9 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("index")
+            return redirect(reverse("index"))
 
     else:
         form = UserCreationForm()
-    context = {"form": form}
+    context = {"user_creation_form": form}
     return render(request, "signup.html", context)

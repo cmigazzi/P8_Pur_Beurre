@@ -264,6 +264,7 @@ ul {
     padding: 0;
     border-radius: 2px;
     border: white solid 1px;
+    z-index: 2000;
 }
 
 .ui-menu-item:hover {
@@ -282,5 +283,26 @@ ul {
 }
 
 .legals h2 {
+    margin-bottom: 2rem;
+}
+
+/* Login & signup */
+header.signup-login {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+form.signup-login {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.alert ul {
+    margin: 0;
+    padding: 0;
+}
+
+form.signup-link {
+    margin-top: 2rem;
     margin-bottom: 2rem;
 }

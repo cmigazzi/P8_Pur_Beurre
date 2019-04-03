@@ -75,22 +75,28 @@ def details(request, id_product):
 @require_http_methods(["POST"])
 def save_substitute(request):
     if request.is_ajax():
-        data = json.loads(request.POST["data"])
-        user = request.user
-        try:
-            original = Product.objects.get(id=data["original"])
-            substitute = Product.objects.get(id=data["substitute"])
-            Substitution.objects.create(user=user,
-                                        original=original,
-                                        substitute=substitute)
-        except ObjectDoesNotExist:
-            response = {
-              "title": "Erreur",
-              "message": "Impossible de retrouver les produits à sauvegarder."}
+        if request.user.is_authenticated:
+            data = json.loads(request.POST["data"])
+            user = request.user
+            try:
+                original = Product.objects.get(id=data["original"])
+                substitute = Product.objects.get(id=data["substitute"])
+                Substitution.objects.create(user=user,
+                                            original=original,
+                                            substitute=substitute)
+            except ObjectDoesNotExist:
+                response = {
+                "title": "Erreur",
+                "message": "Impossible de retrouver les produits à sauvegarder."}
+            else:
+                response = {
+                    "title": "Succès",
+                    "message": "Le produit est sauvegardé !"}
         else:
             response = {
-                "title": "Succès",
-                "message": "Le produit est sauvegardé !"}
+                "title": "Non connecté",
+                "message": "Connectez-vous pour pouvoir sauvegarder des produits"
+            }
     else:
         response = {
             "title": "Erreur",

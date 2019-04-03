@@ -7,11 +7,13 @@ User = get_user_model()
 
 class LoginForm(AuthenticationForm):
     username = forms.EmailField(
-                max_length=254, label='',
+                max_length=254, label='E-mail',
                 widget=forms.TextInput(attrs={
                     "class": "form-control mb-2",
                     "placeholder": "Votre adresse e-mail..."}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={
+    password = forms.CharField(
+                label='Mot de passe',
+                widget=forms.PasswordInput(attrs={
                     "class": "form-control",
                     "placeholder": "Mot de passe"}))
 
@@ -20,16 +22,16 @@ class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     email = forms.EmailField(
-                max_length=254, label='',
+                max_length=254, label='E-mail',
                 widget=forms.TextInput(attrs={
                     "class": "form-control mb-2",
                     "placeholder": "Votre adresse e-mail..."}))
-    password1 = forms.CharField(label='',
+    password1 = forms.CharField(label='Mot de passe',
                                 widget=forms.PasswordInput(attrs={
                                     "class": "form-control mb-2",
                                     "placeholder": "Mot de passe..."}
                                 ))
-    password2 = forms.CharField(label='',
+    password2 = forms.CharField(label='Confirmer le mot de passe',
                                 widget=forms.PasswordInput(attrs={
                                     "class": "form-control",
                                     "placeholder": "Confirmer le mot de passe."}
