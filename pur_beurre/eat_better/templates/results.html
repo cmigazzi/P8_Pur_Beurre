@@ -45,7 +45,16 @@
                     <div class="modal-body">
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                      {% if not user.is_authenticated %}
+                      <form action="{% url 'login' %}">
+                          <button type="submit" class="btn btn-primary">Connexion</button>
+                      </form>
+                      <form action="{% url 'signup' %}">
+                          <button type="submit" class="btn btn-primary">Créer un compte</button>
+                      </form>
+                      {% else %}
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                      {% endif %}
                     </div>
                   </div>
                 </div>

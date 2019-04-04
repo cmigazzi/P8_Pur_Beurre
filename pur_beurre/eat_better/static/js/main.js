@@ -44,7 +44,7 @@ $(document).ready(function() {
             dataType: "json",
             data: {"data": JSON.stringify(data)},
             success: function(data) {
-                console.log(data.message)
+                console.log(data.title)
                 $(".modal-title").text(data.title);
                 $(".modal-body").text(data.message);
                 $("#ajaxModal").modal("show");
