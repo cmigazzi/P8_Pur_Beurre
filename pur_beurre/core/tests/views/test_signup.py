@@ -21,7 +21,8 @@ class TestSignup:
 
     def test_view_return_user_creation_form(self, client):
         response = client.get(reverse("signup"))
-        assert isinstance(response.context["form"], UserCreationForm)
+        assert isinstance(response.context["user_creation_form"],
+                          UserCreationForm)
 
     def test_post_form(self, client):
         data = {"email": "jondoe@gmail.com",

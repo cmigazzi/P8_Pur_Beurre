@@ -90,7 +90,8 @@ def save_substitute(request):
             except Product.DoesNotExist:
                 response = {
                     "title": "Erreur",
-                    "message": "Impossible de retrouver les produits à sauvegarder."}
+                    "message": ("Impossible de retrouver "
+                                "les produits à sauvegarder.")}
             else:
                 response = {
                     "title": "Succès",
@@ -98,7 +99,8 @@ def save_substitute(request):
         else:
             response = {
                 "title": "Non connecté",
-                "message": "Connectez-vous pour pouvoir sauvegarder des produits"
+                "message": ("Connectez-vous pour pouvoir "
+                            "sauvegarder des produits")
             }
     else:
         response = {

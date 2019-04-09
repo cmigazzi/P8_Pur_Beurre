@@ -1,8 +1,7 @@
 """Contains views for core app."""
 from django.shortcuts import render, redirect, reverse
-from django.contrib.auth import login as auth_login
 
-from .forms import UserCreationForm, LoginForm
+from .forms import UserCreationForm
 
 
 def signup(request):

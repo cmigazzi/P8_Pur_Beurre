@@ -34,7 +34,7 @@ class TestSaveSubstitute:
         response = json.loads(json_response.content)
         assert response["message"] == "Erreur de requête"
 
-    def test_user_is_authenticated(self, client, 
+    def test_user_is_authenticated(self, client,
                                    django_user_model, user_for_test):
         data = {"original": "3803", "substitute": "3911"}
         json_response = client.post(reverse("save_substitute"),
