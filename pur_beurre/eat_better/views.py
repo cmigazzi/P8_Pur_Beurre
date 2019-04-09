@@ -35,30 +35,38 @@ def search(request):
     try:
         searched_product = Product.objects.filter(
                     name=request.GET.get("product"))[0]
-        results = []
-        for hierarchy in searched_product.hierarchy_set.all():
-            pre_results = Product.objects.filter(
-                            nutriscore__lt=searched_product.nutriscore,
-                            categories__name=hierarchy.category) \
-                            .order_by("nutriscore")
+        if searched_product.nutriscore == "a":
+            is_healthy = True
+            results = []
+        else:
+            results = []
+            for hierarchy in searched_product.hierarchy_set.all():
+                pre_results = Product.objects.filter(
+                                nutriscore__lt=searched_product.nutriscore,
+                                categories__name=hierarchy.category) \
+                                .order_by("nutriscore")
 
-            if len(results) == 0 and len(pre_results) != 0:
-                results = pre_results
-                if len(results) > 80:
+                if len(results) == 0 and len(pre_results) != 0:
+                    results = pre_results
+                    if len(results) > 80:
+                        break
+
+                elif len(results) + len(pre_results) > 80:
+                    results.union(pre_results)
                     break
 
-            elif len(results) + len(pre_results) > 80:
-                results.union(pre_results)
-                break
+                elif len(results) != 0:
+                    results.union(pre_results)
 
-            elif len(results) != 0:
-                results.union(pre_results)
+            is_healthy = False
 
     except IndexError:
         searched_product = request.GET.get("product")
         results = []
+        is_healthy = False
 
     context = {"product": searched_product,
+               "is_healthy": is_healthy,
                "results": results}
     return render(request, "results.html", context)
 
