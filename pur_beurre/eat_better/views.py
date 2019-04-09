@@ -1,10 +1,9 @@
 import json
 
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForm
 from .models import Product, Substitution
@@ -66,17 +65,21 @@ def search(request):
 
 def details(request, id_product):
     """Return view for details url."""
-    product = Product.objects.get(id=id_product)
-    context = {"product": product,
-               "nutriments": product.nutriments}
-    return render(request, "details.html", context)
+    try:
+        product = Product.objects.get(id=id_product)
+    except Product.DoesNotExist:
+        raise Http404("Aucun produit trouvé.")
+    else:
+        context = {"product": product,
+                   "nutriments": product.nutriments}
+        return render(request, "details.html", context)
 
 
 @require_http_methods(["POST"])
 def save_substitute(request):
     if request.is_ajax():
         if request.user.is_authenticated:
-            data = json.loads(request.POST["data"])
+            data = json.loads(request.body.decode("utf-8"))
             user = request.user
             try:
                 original = Product.objects.get(id=data["original"])
@@ -84,10 +87,10 @@ def save_substitute(request):
                 Substitution.objects.create(user=user,
                                             original=original,
                                             substitute=substitute)
-            except ObjectDoesNotExist:
+            except Product.DoesNotExist:
                 response = {
-                "title": "Erreur",
-                "message": "Impossible de retrouver les produits à sauvegarder."}
+                    "title": "Erreur",
+                    "message": "Impossible de retrouver les produits à sauvegarder."}
             else:
                 response = {
                     "title": "Succès",

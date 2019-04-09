@@ -42,7 +42,7 @@ $(document).ready(function() {
             },
             url: "/save-substitute/",
             dataType: "json",
-            data: {"data": JSON.stringify(data)},
+            data: JSON.stringify(data),
             success: function(data) {
                 console.log(data.title)
                 $(".modal-title").text(data.title);

@@ -65,6 +65,3 @@ class TestSearch:
             assert product.nutriscore < searched_product.nutriscore
             assert len([c for c in product.categories.all()
                         if c in categories]) != 0
-
-
-        
