@@ -5,27 +5,31 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
-          <h2>Créer un compte</h2>
+          <h1>Créer un compte</h1>
         </div>
       </div>
     </div> 
 </header>
 <section>
-  <form method="post" class="col-4 mx-auto signup-login">
-      {% csrf_token %}
-        {% for field in user_creation_form %}
-          <div class="form-group">
-            {{ field.label_tag }}
-            {% if field.errors %}
-              <div class="alert alert-danger" role="alert">
-                {{ field.errors }}
-            </div>
-          {% endif %}
-            {{ field }}
-          </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Inscription</button>  
+  <form method="post" class="col-md-6 col-lg-4 mx-auto signup-login">
+    {% csrf_token %}
+    {% if user_creation_form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ user_creation_form.non_field_errors }}
+      </div>    
+    {% endif %}
+    {% for field in user_creation_form %}
+      <div class="form-group">
+        {{ field.label_tag }}
+        {% if field.errors %}
+          <div class="alert alert-danger" role="alert">
+            {{ field.errors }}
+        </div>
+      {% endif %}
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Inscription</button>  
   </form>
-  
 </section>
 {% endblock %}

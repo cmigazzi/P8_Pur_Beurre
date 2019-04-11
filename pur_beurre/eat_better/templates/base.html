@@ -32,7 +32,7 @@
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="/">
         <img src="{% static 'img/logo_pur_beurre.png' %}" alt="Pur beurre">
-        <span>Pur Beurre</span>
+        <span class="d-none d-md-inline">Pur Beurre</span>
       </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -43,20 +43,20 @@
               <form class="form-inline my-2 my-lg-0 border-0" action="{% url 'search' %}">
                 {% csrf_token %}
                 {{ nav_search_form }}
-                <button class="btn btn-secondary my-0 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-secondary my-0" type="submit"><i class="fas fa-search"></i></button>
               </form>
           </li>
           {% if not user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#"><i class="fas fa-user fa-2x"></i></a>
+            <a class="nav-link js-scroll-trigger" href="{% url 'login' %}"><i class="fas fa-user fa-2x"></i><span class="d-lg-none ml-4">Mon espace</span></a>
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/my-products">{% include 'carotte.svg' %}</a>
+            <a class="nav-link js-scroll-trigger" href="/my-products">{% include 'carotte.svg' %}<span class="d-lg-none ml-3">Mes aliments</span></a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/accounts/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+            <a class="nav-link js-scroll-trigger" href="/accounts/logout"><i class="fas fa-sign-out-alt fa-2x"></i><span class="d-lg-none ml-4">Déconnexion</span></a>
           </li>
           {% endif %}
         </ul>
@@ -69,8 +69,8 @@
   <footer class="bg-light py-5">
     <div class="container">
       <div class="row">
-        <div class="small text-center text-muted col-6"> <a href="/mentions-legales">Mentions légales</a></div>
-        <div class="small text-center text-muted col-6"> <a href="mailto:mail@mail.com">Contact</a></div>
+        <div class="small text-center text-muted col-6 mailto-legals"> <a href="/mentions-legales">Mentions légales</a></div>
+        <div class="small text-center text-muted col-6 mailto-legals"> <a href="mailto:mail@mail.com">Contact</a></div>
       </div>
     </div>
   </footer>

@@ -12,7 +12,7 @@
     </div>
 </header>
 <section class="page-section bg-primary">
-    <div class="container results-list d-flex justify-content-around">
+    <div class="container results-list d-flex flex-wrap justify-content-around">
       {% if is_healthy is True%}
         <p>Ce produit est déjà sain, vous pouvez continuer à le consommer.</p>
       {% elif results|length_is:"0" %}
@@ -20,49 +20,50 @@
       {% else %}      
       {% csrf_token %}
       {% for p in results %}
-        <div class="product col-4 text-center rounded">
-            <a href="{% url 'details' p.id %}">
-              <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
-                  <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
-              </div>
-            </a>
-            <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
-            <div class="product-name container">
-                <a href="{% url 'details' p.id %}">{{ p.name|truncatechars:25 }}</a>
-            </div>            
-            <div class="container save rounded-bottom">
-              <a href="" class="substitute" data-id="{{ p.id }}"><i class="fa fa-save" aria-hidden="true"></i> Sauvegarder</a>
+        <div class="product d-flex flex-column col-lg-3 col-md-4 col-12 text-center rounded">
+          <a href="{% url 'details' p.id %}">
+            <div class="product-img row d-flex flex-wrap align-items-center mx-auto">
+                <img class="rounded img-fluid align-middle mx-auto" src="{{ p.image }}" alt="">
             </div>
+          </a>
+          <div class="nutriscore rounded-circle text-center">{{ p.nutriscore|upper }}</div>
+          
+          <div class="product-name container mt-auto">
+              <a href="{% url 'details' p.id %}">{{ p.name|truncatechars:30 }}</a>
+          </div>            
+          <div class="container save rounded-bottom py-2 py-lg-0">
+            <a href="" class="substitute" data-id="{{ p.id }}"><i class="fa fa-save" aria-hidden="true"></i> Sauvegarder</a>
+          </div>
 
-            <!-- Modal box for succes Ajax save -->
-            <div id="ajaxModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title"></h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                      {% if not user.is_authenticated %}
-                      <form action="{% url 'login' %}">
-                          <button type="submit" class="btn btn-primary">Connexion</button>
-                      </form>
-                      <form action="{% url 'signup' %}">
-                          <button type="submit" class="btn btn-primary">Créer un compte</button>
-                      </form>
-                      {% else %}
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                      {% endif %}
-                    </div>
+          <!-- Modal box for succes Ajax save -->
+          <div id="ajaxModal" class="modal fade" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                </div>
-              </div>
+                  <div class="modal-body">
+                  </div>
+                  <div class="modal-footer">
+                    {% if not user.is_authenticated %}
+                    <form action="{% url 'login' %}">
+                        <button type="submit" class="btn btn-primary">Connexion</button>
+                    </form>
+                    <form action="{% url 'signup' %}">
+                        <button type="submit" class="btn btn-primary">Créer un compte</button>
+                    </form>
+                    {% else %}
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    {% endif %}
+                  </div> <!-- modal-footer -->
+                </div> <!-- modal-content-->
+              </div> <!-- modal-dialog -->
+          </div> <!-- modal -->
+
         </div> <!-- product -->
-        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}
     {% endif %}
     </div>

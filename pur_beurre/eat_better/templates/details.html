@@ -17,12 +17,12 @@
     <div id="img-details" class="row align-items-center">
       <img class="img-fluid" src="{{ product.image }}" alt="{{ product.name }}">
     </div>
-    <div class="row" id="nutriscore_nutriments">
-      <div class="col-6">
+    <div class="container d-flex flex-wrap justify-content-center">
+      <div class="mr-lg-auto nutriscore_nutriments">
         {% static 'img/nutriscore' as img_root%}
         <img src="{{ img_root }}/{{ product.nutriscore }}.png" alt="{{ product.nutriscore }}">
       </div>
-      <div class="col-6">
+      <div class="nutriscore_nutriments">
         <h3>Repères nutritionnels pour 100g</h3>
         <ul>
           <li>
