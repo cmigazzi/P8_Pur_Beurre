@@ -13,9 +13,8 @@ pytest-cov = "*"
 django = "*"
 psycopg2 = "*"
 requests = "*"
-whitenoise = "*"
-dj-database-url = "*"
 gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.7"
