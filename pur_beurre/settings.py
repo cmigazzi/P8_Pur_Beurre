@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get("ENV") == "PRODUCTION":
     DEBUG = False
-    ALLOWED_HOSTS = ['https://eatbetter2019.herokuapp.com/']
+    ALLOWED_HOSTS = ['eatbetter2019.herokuapp.com']
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost']
