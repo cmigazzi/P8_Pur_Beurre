@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,16 +22,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+c2=_=029pp_2xe#o9t4_h!6&8+-fz(vfa*#+jdbowlmq2=&31'
+SECRET_KEY = os.environ.get('SECRET_KEY',
+                            '+c2=_=029pp_2xe#o9t4_h!6&8+-fz(vfa*#+jdbowlmq2=&31')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get("ENV") == "PRODUCTION":
+    DEBUG = False
+    ALLOWED_HOSTS = ['https://eatbetter2019.herokuapp.com/']
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ['localhost']
 
-ALLOWED_HOSTS = ['localhost']
 
+CSRF_USE_SESSIONS = True
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -131,4 +139,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CSRF_USE_SESSIONS = True
+if os.environ.get("ENV") == "PRODUCTION":
+    # Static Files
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'),)
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    # Database
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
