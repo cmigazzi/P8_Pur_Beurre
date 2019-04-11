@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+from decouple import config
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -22,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', default='Qu2+ke{+Xv\ng#FVdCWr-U,4n')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', default=False)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 if os.environ.get("ENV") == "PRODUCTION":
     ALLOWED_HOSTS = ['eatbetter2019.herokuapp.com']
@@ -80,16 +81,16 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-DATABASES = {
-        'default': {
+default_dburl = {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'pur_beurre_201903',
             'USER': 'django',
             'PASSWORD': 'myawesomeapp201903',
             'HOST': 'localhost',
-            'PORT': '5432',
-        },
-    }
+            'PORT': '5432'
+              }
+
+DATABASES = {'default': config('DATABASE_URL', default=default_dburl), }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -133,12 +134,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 
-if os.environ.get("ENV") == "PRODUCTION":
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-
-    STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'),)
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 django_heroku.settings(locals())
