@@ -7,7 +7,8 @@ class Api():
     """Represent the API caller."""
 
     def __init__(self):
-        self.CATEGORIES = ["Biscuits et gâteaux",
+        self.CATEGORIES = ["Fromages",
+                           "Biscuits et gâteaux",
                            "Produits à tartiner sucrés",
                            "Petit-déjeuners",
                            "Desserts"]
@@ -37,7 +38,7 @@ class Api():
             payload = {"search_terms": f"{category}",
                        "search_tag": "category",
                        "sort_by": "unique_scans_n",
-                       "page_size": 500,
+                       "page_size": 250,
                        "json": 1}
 
             response = requests.get(
