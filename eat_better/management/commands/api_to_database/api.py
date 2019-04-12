@@ -7,8 +7,7 @@ class Api():
     """Represent the API caller."""
 
     def __init__(self):
-        self.CATEGORIES = ["Fromages",
-                           "Biscuits et gâteaux",
+        self.CATEGORIES = ["Biscuits et gâteaux",
                            "Produits à tartiner sucrés",
                            "Petit-déjeuners",
                            "Desserts"]
