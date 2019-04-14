@@ -19,8 +19,7 @@
     </div>
     <div class="container d-flex flex-wrap justify-content-center">
       <div class="mr-lg-auto nutriscore_nutriments">
-        {% static 'img/nutriscore' as img_root %}
-        <img src="{{ img_root }}/{{ product.nutriscore }}.png" alt="{{ product.nutriscore }}">
+        <img src="{% static nutriscore_url %}" alt="{{ product.nutriscore }}">
       </div>
       <div class="nutriscore_nutriments">
         <h3>Repères nutritionnels pour 100g</h3>
