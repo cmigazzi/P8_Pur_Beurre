@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
@@ -73,13 +74,19 @@ def search(request):
 
 def details(request, id_product):
     """Return view for details url."""
+    logging.warning("details view begin")
     try:
+        logging.warning("try block")
         product = Product.objects.get(id=id_product)
+        logging.warning("Product find without error")
     except Product.DoesNotExist:
+        logging.warning("raise 404")
         raise Http404("Aucun produit trouvé.")
     else:
+        logging.warning("else block")
         context = {"product": product,
                    "nutriments": product.nutriments}
+        logging.warning("before render")
         return render(request, "details.html", context)
 
 
