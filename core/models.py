@@ -3,8 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    """UserManager model."""
+    """Define UserManager model."""
+
     def create_user(self, email, password=None):
+        """Create a new user."""
         if not email:
             raise ValueError("Email needed.")
         if not password:
@@ -17,6 +19,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password):
+        """Create a new superuser."""
         user = self.create_user(email, password)
         user.is_admin = True
         user.save(using=self._db)
@@ -24,7 +27,8 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    """User model."""
+    """Define User model."""
+
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -35,16 +39,18 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
+        """Represent the model in admin interface."""
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
+        """Check if user have a specific permission."""
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app ?"
+        """Check if the user have permissions to view the app."""
         return True
 
     @property
     def is_staff(self):
+        """User is admin."""
         return self.is_admin

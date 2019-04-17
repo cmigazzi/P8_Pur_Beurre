@@ -5,6 +5,7 @@ from .forms import UserCreationForm
 
 
 def signup(request):
+    """Render the page for user signup."""
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():

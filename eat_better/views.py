@@ -10,7 +10,7 @@ from .models import Product, Substitution
 
 
 def index(request):
-    """Returns view for index url."""
+    """Return view for index url."""
     if request.method == "POST":
         term = json.loads(request.body.decode("utf-8"))["term"].lower()
         products = Product.objects.filter(name__istartswith=term)  \
@@ -26,12 +26,12 @@ def index(request):
 
 
 def legals(request):
-    """Returns view for legals url."""
+    """Return view for legals url."""
     return render(request, "mentions-legales.html")
 
 
 def search(request):
-    """Returns view for search url."""
+    """Return view for search url."""
     try:
         searched_product = Product.objects.filter(
                     name=request.GET.get("product"))[0]
@@ -86,6 +86,7 @@ def details(request, id_product):
 
 @require_http_methods(["POST"])
 def save_substitute(request):
+    """Handle ajax request to save d=the substitute."""
     if request.is_ajax():
         if request.user.is_authenticated:
             data = json.loads(request.body.decode("utf-8"))
@@ -120,6 +121,7 @@ def save_substitute(request):
 
 @login_required
 def my_products(request):
+    """Render favourites products view."""
     user = request.user
     products = Substitution.objects.filter(user=user)
     context = {"products": products}

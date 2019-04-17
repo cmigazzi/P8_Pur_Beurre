@@ -1,4 +1,4 @@
-
+"""Tests for api_to_database module."""
 import pytest
 
 from eat_better.management.commands.api_to_database.api \
@@ -11,7 +11,7 @@ from decimal import Decimal
 
 
 def test_api():
-    """Test Api class exist"""
+    """Test Api class exist."""
     a = Api()
     assert a
 
@@ -24,7 +24,7 @@ def test_api_call(clean_product):
 
 
 def test_bad_products(off_api_bad_products):
-    """Test bad product management"""
+    """Test bad product management."""
     a = Api()
     products = a.call()
     assert products == []

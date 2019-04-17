@@ -4,5 +4,6 @@ from eat_better.management.commands.getfixtures import Command
 
 
 def test_class_exist():
+    """Test that class exist."""
     assert Command()
     assert issubclass(Command, BaseCommand)

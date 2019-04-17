@@ -1,3 +1,6 @@
+"""Tests for getdata command."""
+
+
 import re
 from io import StringIO
 
@@ -11,12 +14,14 @@ from eat_better.models import Product
 
 
 def test_class():
+    """Test that class exist and is a subclass of BaseCommand."""
     assert Command()
     assert issubclass(Command, BaseCommand)
 
 
 @pytest.mark.django_db
 def test_handle():
+    """Test the handle method."""
     assert len(Product.objects.all()) == 0
     c = Command()
     c.handle()
@@ -25,6 +30,7 @@ def test_handle():
 
 @pytest.mark.django_db
 def test_getdata_output():
+    """Test the interface of the command."""
     out = StringIO()
     call_command("getdata", stdout=out)
     assert "Populating database..." in out.getvalue()
