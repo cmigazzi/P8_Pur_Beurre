@@ -32,6 +32,6 @@ class TestUser:
             User.objects.create_user(email="", password="ouinon")
 
     def test_create_user_without_password(self):
-        """Test user creation without password.""""
+        """Test user creation without password."""
         with pytest.raises(ValueError):
             User.objects.create_user(email="non@oui.com", password="")
