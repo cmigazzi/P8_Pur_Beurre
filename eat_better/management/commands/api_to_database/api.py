@@ -38,7 +38,7 @@ class Api():
             payload = {"search_terms": f"{category}",
                        "search_tag": "category",
                        "sort_by": "unique_scans_n",
-                       "page_size": 250,
+                       "page_size": 1000,
                        "json": 1}
 
             response = requests.get(
